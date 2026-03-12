@@ -2,6 +2,7 @@
 # Node / Frontend
 # =========================
 /node_modules
+node_modules/
 /.pnp
 .pnp.*
 .yarn/*

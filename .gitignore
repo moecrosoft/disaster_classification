@@ -1,0 +1,84 @@
+# =========================
+# Node / Frontend
+# =========================
+/node_modules
+/.pnp
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/versions
+
+# Next.js build & output
+/.next/
+/out/
+/build
+node_modules/.cache/
+
+# Testing
+/coverage
+
+# =========================
+# Misc / OS / IDE
+# =========================
+.DS_Store
+*.pem
+*.log
+*.swp
+*.swo
+.idea/
+.vscode/
+
+# =========================
+# Environment / Config
+# =========================
+.env*
+.env
+.envrc
+.vercel
+
+# =========================
+# Typescript
+# =========================
+*.tsbuildinfo
+next-env.d.ts
+
+# =========================
+# Python / Backend / AI
+# =========================
+# Virtual environments
+venv/
+env/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+*.egg
+
+# Python AI libraries / site-packages
+ai/lib/
+ai/__pycache__/
+
+# Large AI model files
+*.pt
+*.pth
+*.ckpt
+*.h5
+
+# =========================
+# Data / datasets / temporary files
+# =========================
+data/
+*.csv
+*.json
+*.npz
+*.pickle
+*.pkl
+*.hdf5
+
+# =========================
+# Logs
+# =========================
+*.log

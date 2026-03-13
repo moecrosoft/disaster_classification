@@ -3,7 +3,8 @@ FROM python:3.10
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --user --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir torch==2.10.0 -f https://download.pytorch.org/whl/cpu/torch_stable.html
+RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 

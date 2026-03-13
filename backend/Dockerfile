@@ -1,21 +1,23 @@
-# Use a CPU-only PyTorch base image
-FROM pytorch/pytorch:2.9.1-cpu-py3.11
+FROM python:3.11-slim
 
 # Set working directory
 WORKDIR /app
 
-# Copy and install Python dependencies
+# Copy requirements first for caching
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy the rest of your application
+# Upgrade pip and install CPU-only PyTorch + dependencies
+RUN pip install --upgrade pip \
+    && pip install --no-cache-dir -r requirements.txt
+
+# Copy the rest of your app
 COPY . .
 
-# Add local pip bin to PATH
+# Add local bin to PATH (for --user installs)
 ENV PATH=/root/.local/bin:$PATH
 
-# Expose port
+# Expose the port your app will run on
 EXPOSE 8000
 
-# Start the FastAPI app
+# Run your FastAPI app
 CMD ["uvicorn", "src.api:app", "--host", "0.0.0.0", "--port", "8000"]

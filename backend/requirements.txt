@@ -1,5 +1,5 @@
 -f https://download.pytorch.org/whl/cpu/torch_stable.html
-torch==2.10.0
+torch==2.10.0+cpu
 pandas
 numpy
 matplotlib

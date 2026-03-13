@@ -1,16 +1,10 @@
-FROM python:3.12-bullseye AS builder
+FROM python:3.10
 
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --no-cache-dir -r requirements.txt \
-    -f https://download.pytorch.org/whl/cpu/torch_stable.html
+RUN pip install --user --no-cache-dir -r requirements.txt
 
-FROM python:3.12-slim
-
-WORKDIR /app
-
-COPY --from=builder /root/.local /root/.local
 COPY . .
 
 ENV PATH=/root/.local/bin:$PATH

@@ -3,7 +3,8 @@ FROM python:3.12-bullseye AS builder
 WORKDIR /app
 
 COPY requirements.txt .
-RUN pip install --user --no-cache-dir -r requirements.txt
+RUN pip install --no-cache-dir -r requirements.txt \
+    -f https://download.pytorch.org/whl/cpu/torch_stable.html
 
 FROM python:3.12-slim
 

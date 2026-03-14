@@ -35,7 +35,7 @@ jobs:
 
             git pull origin main
 
-            sudo docker compose down || true
-            sudo docker compose up -d --build
+            sudo docker-compose down || true
+            sudo docker-compose up -d --build
 
             sudo docker system prune -f

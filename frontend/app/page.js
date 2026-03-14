@@ -7,7 +7,7 @@ export default function Home(){
   const [result, setResult] = useState(null)
 
   async function analyse(){
-    const res = await fetch('http://47.128.71.156:8000/predict',{
+    const res = await fetch('http://52.221.181.89:8000/predict',{
       method:'POST',
       headers:{
         'Content-Type':'application/json'

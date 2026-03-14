@@ -17,13 +17,16 @@ jobs:
           username: ${{ secrets.EC2_USER }}
           key: ${{ secrets.EC2_SSH_KEY }}
           script: |
+            # Install Docker & Git if missing
             if ! command -v docker >/dev/null 2>&1; then
               sudo apt update
               sudo apt install -y docker.io docker-compose git
+              sudo systemctl enable docker
               sudo systemctl start docker
               sudo usermod -aG docker $USER
             fi
 
+            # Clone repo if it doesn't exist
             if [ ! -d "disaster_classification" ]; then
               git clone https://github.com/moecrosoft/disaster_classification.git
             fi
@@ -32,7 +35,7 @@ jobs:
 
             git pull origin main
 
-            docker-compose down || true
-            docker-compose up -d --build
+            sudo docker compose down || true
+            sudo docker compose up -d --build
 
-            docker system prune -f
+            sudo docker system prune -f

@@ -9,8 +9,10 @@ export default function Home(){
   const [showHistory, setShowHistory] = useState(false)
   const [messages, setMessages] = useState([])
 
+  const API = process.env.NEXT_PUBLIC_API_URL
+
   async function analyse(){
-    const res = await fetch('http://localhost:8000/predict',{
+    const res = await fetch(`${API}/predict`,{
       method:'POST',
       headers:{
         'Content-Type':'application/json'
@@ -24,7 +26,7 @@ export default function Home(){
   }
 
   async function loadHistory(){
-    const res = await fetch('http://localhost:8000/history')
+    const res = await fetch(`${API}/history`)
     const data = await res.json()
 
     setMessages(data)

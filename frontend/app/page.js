@@ -56,7 +56,7 @@ export default function Home(){
           onClick={analyse}
           className='bg-red-600 hover:bg-red-700 text-white font-medium py-3 rounded-xl transition shadow-sm cursor-pointer'
         >
-          Analyse Message
+          Analyze Message
         </button>
 
         <button

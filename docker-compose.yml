@@ -3,7 +3,32 @@ services:
     build: ./backend
     ports:
       - '8000:8000'
+    depends_on:
+      - db
+    environment:
+      POSTGRES_HOST: db
+      POSTGRES_DB: ai_chat
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Postgresmps10
+    volumes:
+      - ./backend:/app
+
+
   frontend:
     build: ./frontend
     ports:
       - '3000:3000'
+
+  db: 
+    image: postgres:15
+    ports:
+      - '5432:5432'
+    environment:
+      POSTGRES_DB: ai_chat
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: Postgresmps10
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:

@@ -5,6 +5,7 @@ import { useState } from 'react'
 export default function Home() {
   const [text, setText] = useState('')
   const [result, setResult] = useState(null)
+  const [submittedMessage, setSubmittedMessage] = useState('')
 
   const [showHistory, setShowHistory] = useState(false)
   const [messages, setMessages] = useState([])
@@ -20,7 +21,8 @@ export default function Home() {
 
     const data = await res.json()
     setResult(data.prediction)
-    setText('')
+    setSubmittedMessage(text) // store the message before clearing
+    setText('')               // clear textarea
     setShowResult(true)
   }
 
@@ -81,7 +83,7 @@ export default function Home() {
             </div>
             <div className="flex flex-col gap-4">
               <div className="text-sm text-gray-400">Your Message</div>
-              <div className="text-white font-medium">{text || '(message cleared)'}</div>
+              <div className="text-white font-medium">{submittedMessage}</div>
               <div className="border-t border-gray-700 pt-2 mt-2 text-sm text-gray-400">
                 AI Result
               </div>

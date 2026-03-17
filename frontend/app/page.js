@@ -69,7 +69,7 @@ export default function Home(){
         {result && (
           <div className='rounded-xl p-4 text-center border border-gray-600 bg-gray-900'>
             <span className='text-gray-400 text-sm'>
-              Prediction
+              AI Prediction
             </span>
             <div className='text-xl font-semibold text-white mt-1'>
               {result}

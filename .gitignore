@@ -36,8 +36,6 @@ __pycache__/
 *.egg
 ai/lib/
 ai/__pycache__/
-*.pt
-*.pth
 *.ckpt
 *.h5
 *.npz

@@ -12,7 +12,10 @@ export default function Home() {
 
   const [showResult, setShowResult] = useState(false)
 
-  const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL 
+  const BACKEND_URL =
+    typeof window !== 'undefined' && window.location.hostname === 'localhost'
+      ? 'http://localhost:8000'
+      : 'http://52.221.181.89:8000';
 
   async function analyse() {
     const res = await fetch(`${BACKEND_URL}/predict`,{

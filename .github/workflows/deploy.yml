@@ -30,14 +30,12 @@ jobs:
             fi
 
             cd disaster_classification
-
             git pull origin main
 
-            # Write .env file with secrets
+            # Write .env file for frontend/backend URLs only
             echo "NEXT_PUBLIC_BACKEND_URL=${{ secrets.BACKEND_URL }}" > .env
             echo "NEXT_PUBLIC_FRONTEND_URL=${{ secrets.FRONTEND_URL }}" >> .env
 
             sudo docker-compose down || true
             sudo docker-compose up -d --build
-
             sudo docker system prune -f

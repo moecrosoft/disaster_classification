@@ -7,6 +7,8 @@ services:
       - '8000:8000'
     depends_on:
       - db
+    env_file:
+      - .env
     environment:
       POSTGRES_HOST: db
       POSTGRES_DB: ai_chat
@@ -20,7 +22,7 @@ services:
     ports:
       - '3000:3000'
     env_file:
-      - .env  
+      - .env
 
   db: 
     image: postgres:15

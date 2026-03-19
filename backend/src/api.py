@@ -7,7 +7,7 @@ import psycopg2
 
 app = FastAPI()
 
-FRONTEND_URL = os.environ.get('NEXT_PUBLIC_FRONTEND_URL', 'http://localhost:3000')
+FRONTEND_URL = os.environ.get('NEXT_PUBLIC_FRONTEND_URL')
 
 app.add_middleware(
     CORSMiddleware,

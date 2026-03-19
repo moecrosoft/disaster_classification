@@ -1,38 +1,29 @@
 import pandas as pd
-import numpy as np
-import torch
-import os
-from sklearn.model_selection import train_test_split
 
-def load_data():
-    base = os.path.dirname(__file__)
-    path = os.path.join(base,'..','data','train.csv')
-    df = pd.read_csv(path)
-    df = df[['text','target']]
-    df['text'] = df['text'].str.lower()
-    
-    return df
+def load_train():
+    return pd.read_csv('backend/data/train.csv')
 
-def tokenize(text):
-    return text.split()
+def load_test():
+    return pd.read_csv('backend/data/test.csv')
 
-def build_vocab(texts):
-    vocab = {'<PAD>':0}
-    index = 1
-    for sentence in texts:
-        for word in tokenize(sentence):
-            if word not in vocab:
-                vocab[word] = index
-                index += 1
-
+def build_vocab(texts, min_freq=2):
+    from collections import Counter
+    counter = Counter()
+    for text in texts:
+        counter.update(text.split())
+    vocab = {'<pad>': 0, '<unk>': 1}
+    idx = 2
+    for word, freq in counter.items():
+        if freq >= min_freq:
+            vocab[word] = idx
+            idx += 1
     return vocab
 
-def encode_text(text,vocab,max_len):
-    tokens = tokenize(text)
-    ids = [vocab.get(t,0) for t in tokens]
-    if len(ids) < max_len:
-        ids += [0] * (max_len-len(ids))
+def encode_text(text, vocab, max_len=60):
+    tokens = text.split()
+    encoded = [vocab.get(t, vocab['<unk>']) for t in tokens]
+    if len(encoded) < max_len:
+        encoded += [vocab['<pad>']] * (max_len - len(encoded))
     else:
-        ids = ids[:max_len]
-
-    return ids
+        encoded = encoded[:max_len]
+    return encoded

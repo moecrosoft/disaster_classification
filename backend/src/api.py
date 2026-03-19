@@ -2,21 +2,16 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from src.inference import predict
 from fastapi.middleware.cors import CORSMiddleware
-from src.dataset import load_data, build_vocab
 import os
-import psycopg2
-
-df = load_data()
-texts = df['text'].tolist()
-vocab = build_vocab(texts)
+import psycopg2 
 
 app = FastAPI()
 
+FRONTEND_URL = os.environ.get('FRONTEND_URL', 'http://localhost:3000')
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[
-        'http://52.221.181.89:3000'
-    ],
+    allow_origins=[FRONTEND_URL],
     allow_credentials=True,
     allow_methods=['*'],
     allow_headers=['*']
@@ -30,42 +25,31 @@ conn = psycopg2.connect(
 )
 
 class Request(BaseModel):
-    text:str
+    text: str
 
 def save_message(user_message, ai_result):
     cur = conn.cursor()
     cur.execute(
-        "INSERT INTO messages (user_message, ai_result) VALUES (%s, %s)",
+        'INSERT INTO messages (user_message, ai_result) VALUES (%s, %s)',
         (user_message, ai_result)
     )
     conn.commit()
     cur.close()
 
 @app.post('/predict')
-
 def classify(req:Request):
     user_text = req.text
-    result = predict(user_text, vocab)
-    save_message(user_text, result)
-    return {'prediction': result}
+    result_dict = predict(user_text)
+    result_str = f'{result_dict["label"]} (confidence: {result_dict["confidence"]:.2f})'
+    save_message(user_text, result_str)
+    return {'prediction': result_str}
 
 @app.get('/history')
-
 def history():
     cur = conn.cursor()
-
     cur.execute(
         'SELECT user_message, ai_result FROM messages ORDER BY id DESC LIMIT 50'
     )
-
     rows = cur.fetchall()
-
-    messages = []
-
-    for r in rows:
-        messages.append({
-            'user_message': r[0],
-            'ai_result': r[1]
-        })
-
+    messages = [{'user_message': r[0], 'ai_result': r[1]} for r in rows]
     return messages

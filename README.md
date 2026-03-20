@@ -1,4 +1,4 @@
-# 🚨 Emergency Detection AI
+# 🚨 Text Based Emergency Detection AI
 
 An end-to-end AI application that detects whether a text message indicates an emergency.
 
